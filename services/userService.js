@@ -1,7 +1,7 @@
 const ObjectId = require('mongodb').ObjectId;
 const mongoService = require('./mongoService');
 
-function querys() {
+function query() {
     return mongoService.connectToMongo()
         .then(db => {
             const collection = db.collection('users');
