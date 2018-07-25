@@ -1,7 +1,48 @@
 {
-    "userName":"bla bla ",
-    "password":"asdasdasd",
-    "email":"blasdas@gmail.com",
-    "trips":[],
-    "pins":[]
+    "title": "fake data trip",
+    "description": "Best time of my life in gaza, Awesome Sea and cool fireworks every day.",
+    "markers": [
+        {
+            "cords": {
+                "lat": 32.087988,
+                "lng": 34.803302
+            },
+            "desc": "the bonim st.4",
+            "category": "study",
+            "photos": [
+                "https://media-cdn.tripadvisor.com/media/photo-s/05/05/80/02/ramat-gan.jpg",
+                "http://www.hotelroomsearch.net/im/city/ramat-gan-israel-10.jpg"
+            ],
+            "createdAt":1532538154
+        }, 
+        {
+            "cords": {
+                "lat": 32.085218,
+                "lng": 34.802005
+            },
+            "desc": "second marker near bialik street",
+            "category": "view",
+            "photos": [
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/PikiWiki_Israel_31469_Bialik_mall_in_Ramat_Gan.JPG/800px-PikiWiki_Israel_31469_Bialik_mall_in_Ramat_Gan.JPG",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrbe4RiqTMENjTew1N85sHklptRnsoVEdATsNeTtqmm8PFU3ab"
+            ],
+            "createdAt":1532538559 
+        },
+        {
+            "cords": {
+                "lat": 32.086115,
+                "lng": 34.808237
+            },
+            "desc": "third and last marker this is elazar vainshel awesome street and food!!!!",
+            "category": "food",
+            "photos": [
+                "https://www.ynet.co.il/PicServer2/02012008/1444220/D697-065_wa.jpg",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrbe4RiqTMENjTew1N85sHklptRnsoVEdATsNeTtqmm8PFU3ab"
+            ],
+            "createdAt":1532538893 
+        }
+    ],
+    "traveledTime": "june-augost",
+    "views": 16,
+    "userId": "5b582e7238ca7013b369706e"
 }
