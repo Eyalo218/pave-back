@@ -8,7 +8,7 @@ function query() {
             return collection.find({}).toArray()
             return Promise.resolve(currReviews)
         })
-}
+}   
 
 function getById(userId) {
     userId = new ObjectId(userId)
