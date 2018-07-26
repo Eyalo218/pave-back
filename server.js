@@ -24,8 +24,8 @@ app.use(session({
 
 // app.send('hello')
 
-// const addTripRoutes = require('./routes/tripRoutes')
-// addTripRoutes(app)
+const addTripRoutes = require('./routes/tripRoutes')
+addTripRoutes(app)
 
 const addUserRoutes = require('./routes/userRoutes')
 addUserRoutes(app)

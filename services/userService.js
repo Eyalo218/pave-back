@@ -55,7 +55,6 @@ function update(user) {
 
 
 
-
 module.exports = {
     query,
     getById,
