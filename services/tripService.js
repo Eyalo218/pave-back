@@ -27,7 +27,7 @@ function getByText(searchedText) {
                 $where: `    
                     var words = this.title.split(" ");
                     for (var i = 0; i < words.length; i++) {
-                        if (words[i] == '${searchedText}') return true;
+                        if (words[i].toLowerCase() == '${searchedText.toLowerCase()}') return true;
                     }`
             }).toArray();
             // return collection.find({ "title": searchedText }).toArray();
@@ -58,7 +58,6 @@ function add(trip) {
 function update(trip) {
     trip._id = new ObjectId(trip._id)
     return mongoService.connectToMongo()
-
         .then(db => {
             const collection = db.collection('trips');
             return collection.updateOne({ _id: trip._id }, { $set: trip })
