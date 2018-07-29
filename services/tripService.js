@@ -19,6 +19,21 @@ function getById(tripId) {
         })
 }
 
+function getByText(searchedText) {
+    return mongoService.connectToMongo()
+        .then(db => {
+            const collection = db.collection('trips');
+            return collection.find({
+                $where: `    
+                    var words = this.title.split(" ");
+                    for (var i = 0; i < words.length; i++) {
+                        if (words[i] == '${searchedText}') return true;
+                    }`
+            }).toArray();
+            // return collection.find({ "title": searchedText }).toArray();
+        })
+}
+
 function remove(tripId) {
     tripId = new ObjectId(tripId)
     return mongoService.connectToMongo()
@@ -61,5 +76,6 @@ module.exports = {
     getById,
     remove,
     add,
-    update
+    update,
+    getByText
 }
