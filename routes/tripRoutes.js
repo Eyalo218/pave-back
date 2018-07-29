@@ -34,7 +34,9 @@ function addTripRoutes(app) {
     app.put('/trips/:tripId', (req, res) => {
         const trip = req.body;
         tripService.update(trip)
-            .then(trip => res.json(trip))
+            .then(trip => {
+                return res.json(trip)
+            })
     })
 
 }
