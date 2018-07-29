@@ -4,6 +4,7 @@ const userService = require('../services/userService')
 
 
 function addUserRoutes(app) {
+
     app.get('/users', (req, res) => {
         console.log('swalala2');
         userService.query()
@@ -23,20 +24,36 @@ function addUserRoutes(app) {
             .then(() => res.end(`user ${userId} Deleted `))
     })
 
-    app.post('/users', (req, res) => {
+    app.post(`${USER_URL}/signup`, (req, res) => {
         const user = req.body;
-        userService.add(user)
+        user.pins = [];
+        user.trips = [];
+        console.log('backend got user ', user)
+        return userService.add(user)
             .then(user => {
+                req.session.loggedInUser = user.name;
                 res.json(user)
             })
     })
+
+    app.post(`${USER_URL}/checkLogin`, (req, res) => {
+        const credentials = req.body
+        return userService.checkLogin(credentials)
+            .then(user => {
+                // TODO: entire user
+                req.session.loggedinUser = user.name;
+                return res.json(user[0])
+            })
+            .catch(err => {
+                res.status(401).send('Wrong user/pass')
+            })
+    });
 
     app.put('/users/:userId', (req, res) => {
         const user = req.body;
         userService.update(user)
             .then(user => res.json(user))
     })
-
 }
 
 module.exports = addUserRoutes

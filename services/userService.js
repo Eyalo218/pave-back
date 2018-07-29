@@ -28,17 +28,6 @@ function remove(userId) {
         })
 }
 
-function add(user) {
-    return mongoService.connectToMongo()
-        .then(db => {
-            const collection = db.collection('users');
-            return collection.insertOne(user)
-                .then(result => {
-                    user._id = result.insertedId;
-                    return user;
-                })
-        })
-}
 
 function update(user) {
     user._id = new ObjectId(user._id)
@@ -53,6 +42,48 @@ function update(user) {
         })
 }
 
+function add(user) {
+    return mongoService.connectToMongo()
+        .then(db => {
+            const collection = db.collection('users');
+            return collection.insertOne(user)
+                .then(result => {
+                    user._id = result.insertedId;
+                    return user;
+                })
+        })
+}
+
+function checkLogin(creds) {
+    return mongoService.connectToMongo()
+        .then(db => {
+            const collection = db.collection('users');
+                return collection.find({"name": `${creds.name}`, "name": `${creds.password}`}).toArray()
+                    .then(user => {
+                        console.log('This IS Tha user', user)
+                        if (user) {
+                            var userToResolve = {...user}
+                            // delete userToResolve.password;
+                            return Promise.resolve(userToResolve)
+                        } else return Promise.reject()
+                    })
+        })
+}
+
+
+
+    // console.log('checkLogin');
+    // console.log('checkLogin user service-SERVER, creds=', creds);
+    // var user = db.users.find(`{"name": "${creds.name}", "name": "${creds.password}"}`)
+    // // var user = db.users.find({ "name": creds.name, "password": creds.password })
+    // console.log('user, after filter: ', user);
+    // if (user) {
+    //     var userToResolve = {...user}
+    //     // delete userToResolve.password;
+    //     return Promise.resolve(userToResolve)
+    // } else return Promise.reject()
+
+
 
 
 module.exports = {
@@ -60,5 +91,6 @@ module.exports = {
     getById,
     remove,
     add,
+    checkLogin,
     update
 }
