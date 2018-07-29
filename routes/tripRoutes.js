@@ -5,10 +5,23 @@ const tripService = require('../services/tripService')
 
 function addTripRoutes(app) {
     app.get('/trips', (req, res) => {
-        console.log('swalala2');
-        tripService.query()
-        .then((trips) => res.json(trips))
-        .then(trips => res.send(trips))
+        const searchedText = req.query.searchedText;
+        if (searchedText === '') {
+            tripService.query()
+                .then((trips) => res.json(trips))
+                .then(trips => res.send(trips))
+        }
+        else {
+            tripService.getByText(searchedText)
+                .then((trips) => {
+                    console.log(trips);
+                    res.json(trips)
+                })
+                .then(trips => {
+                    res.send(trips);
+                })
+        }
+
     })
 
     app.get('/trips/:tripId', (req, res) => {
@@ -16,7 +29,7 @@ function addTripRoutes(app) {
         tripService.getById(tripId)
             .then(trip => res.json(trip))
     })
-    
+
     app.delete('/trips/:tripId', (req, res) => {
         const tripId = req.params.tripId;
         tripService.remove(tripId)
