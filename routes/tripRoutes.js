@@ -21,7 +21,6 @@ function addTripRoutes(app) {
         } else {
             tripService.getByText(searchedText)
                 .then((trips) => {
-                    console.log(trips);
                     res.json(trips)
                 })
                 .then(trips => {

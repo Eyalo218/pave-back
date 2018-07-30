@@ -30,8 +30,8 @@ addTripRoutes(app)
 const addUserRoutes = require('./routes/userRoutes')
 addUserRoutes(app)
 
-// const addReviewRoutes = require('./routes/reviewRoutes')
-// addReviewRoutes(app)
+const addReviewRoutes = require('./routes/reviewRoutes')
+addReviewRoutes(app)
 
 
 app.listen(3000,()=>{
