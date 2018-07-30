@@ -34,6 +34,14 @@ function getByText(searchedText) {
         })
 }
 
+function getTripsByUserId(userId) {
+    return mongoService.connectToMongo()
+        .then(db => {
+            const collection = db.collection('trips');
+            return collection.find({ userId: userId }).toArray()
+    })
+}
+
 function remove(tripId) {
     tripId = new ObjectId(tripId)
     return mongoService.connectToMongo()
@@ -77,5 +85,6 @@ module.exports = {
     remove,
     add,
     update,
-    getByText
+    getByText,
+    getTripsByUserId
 }

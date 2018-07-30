@@ -6,7 +6,6 @@ const userService = require('../services/userService')
 function addUserRoutes(app) {
 
     app.get('/users', (req, res) => {
-        console.log('swalala2');
         userService.query()
         .then((users) => res.json(users))
         .then(users => res.send(users))
@@ -14,7 +13,7 @@ function addUserRoutes(app) {
 
     app.get('/users/:userId', (req, res) => {
         const userId = req.params.userId;
-        userService.getById(userId)
+        return userService.getById(userId)
             .then(user => res.json(user))
     })
     
@@ -28,7 +27,6 @@ function addUserRoutes(app) {
         const user = req.body;
         user.pins = [];
         user.trips = [];
-        console.log('backend got user ', user)
         return userService.add(user)
             .then(user => {
                 req.session.loggedInUser = user.name;
