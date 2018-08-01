@@ -16,7 +16,7 @@ function addTripRoutes(app) {
                 .then((trips) => {
                     tripService.getByMatchedCountries(trips).then(res => {
                         Promise.all(res).then(matchedTripsByCountry => {
-                            return matchedTripsByCountry;
+                            res.json(matchedTripsByCountry).then()
                         })
                     })
                     res.json(trips)
