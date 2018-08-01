@@ -21,11 +21,17 @@ function addTripRoutes(app) {
         } else {
             tripService.getByText(searchedText)
                 .then((trips) => {
+                    tripService.getByMatchedCountries(trips).then(res => {
+                        Promise.all(res).then(matchedTripsByCountry => {
+                            res.json(matchedTripsByCountry).then()
+                        })
+                    })
                     res.json(trips)
                 })
                 .then(trips => {
                     res.send(trips);
                 })
+
         }
 
     })

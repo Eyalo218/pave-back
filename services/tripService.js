@@ -24,13 +24,20 @@ function getByText(searchedText) {
         .then(db => {
             const collection = db.collection('trips');
             return collection.find({
-                $where: `    
-                    var words = this.title.split(" ");
-                    for (var i = 0; i < words.length; i++) {
-                        if (words[i].toLowerCase() == '${searchedText.toLowerCase()}') return true;
-                    }`
+                $where:
+                    `return '${searchedText.toLowerCase()}' === this.title.toLowerCase().substr(0,${searchedText.length});`
             }).toArray();
-            // return collection.find({ "title": searchedText }).toArray();
+        })
+}
+function getByMatchedCountries(trips) {
+    return mongoService.connectToMongo()
+        .then(db => {
+            var matchedTripsPrms= [];
+            const collection = db.collection('trips');
+            trips.forEach(trip => {
+                matchedTripsPrms.push(collection.find({ country: trip.country }).toArray());
+            });
+            return matchedTripsPrms;
         })
 }
 
@@ -85,5 +92,6 @@ module.exports = {
     add,
     update,
     getByText,
-    getTripsByUserId
+    getTripsByUserId,
+    getByMatchedCountries
 }

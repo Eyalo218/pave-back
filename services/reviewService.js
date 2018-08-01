@@ -28,14 +28,21 @@ function remove(tripId) {
         })
 }
 
-
-
-
-
-
+function add(review) {
+    return mongoService.connectToMongo()
+        .then(db => {
+            const collection = db.collection('reviews');
+            return collection.insertOne(review)
+                .then(result => {
+                    review._id = result.insertedId;
+                    return review;
+                })
+        })
+}
 
 module.exports = {
     query,
     getByTripId,
-    remove
+    remove,
+    add
 }

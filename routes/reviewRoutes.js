@@ -6,6 +6,14 @@ function addReviewRoutes(app) {
         reviewService.getByTripId(tripId)
             .then(trip => res.json(trip))
     })
+
+    app.post('/reviews', (req, res) => {
+        const review = req.body;
+        userService.add(review)
+            .then(review => {
+                res.json(review)
+            })
+    })
 }
 
 module.exports = addReviewRoutes;
