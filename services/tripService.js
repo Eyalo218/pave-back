@@ -25,14 +25,14 @@ function getByText(searchedText) {
             const collection = db.collection('trips');
             return collection.find({
                 $where:
-                    `return '${searchedText.toLowerCase()}' === this.title.toLowerCase().substr(0,${searchedText.length});`
+                    `return ('${searchedText.toLowerCase()}' === this.title.toLowerCase().substr(0,${searchedText.length})) || ('${searchedText.toLowerCase()}' === this.country.toLowerCase())`
             }).toArray();
         })
 }
 function getByMatchedCountries(trips) {
     return mongoService.connectToMongo()
         .then(db => {
-            var matchedTripsPrms= [];
+            var matchedTripsPrms = [];
             const collection = db.collection('trips');
             trips.forEach(trip => {
                 matchedTripsPrms.push(collection.find({ country: trip.country }).toArray());
