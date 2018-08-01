@@ -15,7 +15,6 @@ function addTripRoutes(app) {
             tripService.getByText(searchedText)
                 .then((trips) => {
                     console.log(trips);
-                    
                     res.json(trips)
                 })
                 .then(trips => {
