@@ -41,6 +41,7 @@ function getByMatchedCountries(trips) {
         })
 }
 
+
 function getTripsByUserId(userId) {
     return mongoService.connectToMongo()
         .then(db => {
