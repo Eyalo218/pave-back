@@ -1,7 +1,7 @@
 const TRIP_URL = '/trips';
 const tripService = require('../services/tripService')
 // const reviewService = require('../services/reviewService')
-
+ 
 
 function addTripRoutes(app) {
     app.get('/trips', (req, res) => {
