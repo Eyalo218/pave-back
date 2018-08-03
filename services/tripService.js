@@ -29,6 +29,7 @@ function getByText(searchedText) {
             }).toArray();
         })
 }
+
 function getByMatchedCountries(trips) {
     return mongoService.connectToMongo()
         .then(db => {
@@ -41,13 +42,20 @@ function getByMatchedCountries(trips) {
         })
 }
 
+function getByActiveTrips() {
+    return mongoService.connectToMongo()
+        .then(db => {
+            const collection = db.collection('trips');
+            return collection.find({ isComplete: true }).toArray();
+        })
+}
 
 function getTripsByUserId(userId) {
     return mongoService.connectToMongo()
         .then(db => {
             const collection = db.collection('trips');
             return collection.find({ userId: userId }).toArray()
-    })
+        })
 }
 
 function remove(tripId) {
@@ -94,5 +102,6 @@ module.exports = {
     update,
     getByText,
     getTripsByUserId,
-    getByMatchedCountries
+    getByMatchedCountries,
+    getByActiveTrips
 }
