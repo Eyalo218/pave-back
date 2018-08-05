@@ -4,9 +4,10 @@ const mongoService = require('./mongoService');
 function query() {
     return mongoService.connectToMongo()
         .then(db => {
+            
             const collection = db.collection('trips');
             return collection.find({}).toArray()
-            return Promise.resolve(currReviews)
+            // return Promise.resolve(currReviews)
         })
 }
 
