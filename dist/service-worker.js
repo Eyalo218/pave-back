@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.4.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.346da4c8dc1e66e77c99bdd1dfe3962c.js"
+  "/precache-manifest.fa26b2cee6e7d24aa3e67ed2723c8790.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "pave-front"});
