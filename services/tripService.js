@@ -4,9 +4,10 @@ const mongoService = require('./mongoService');
 function query() {
     return mongoService.connectToMongo()
         .then(db => {
+
             const collection = db.collection('trips');
             return collection.find({}).toArray()
-            return Promise.resolve(currReviews)
+            // return Promise.resolve(currReviews)
         })
 }
 
@@ -25,19 +26,25 @@ function getByText(searchedText) {
             const collection = db.collection('trips');
             return collection.find({
                 $where:
-                    `return ('${searchedText.toLowerCase()}' === this.title.toLowerCase().substr(0,${searchedText.length})) || ('${searchedText.toLowerCase()}' === this.country.toLowerCase())`
+                    `return ('${searchedText.toLowerCase()}' === this.title.toLowerCase().substr(0,${searchedText.length}))
+                     || ('${searchedText.toLowerCase()}' === this.country.toLowerCase().substr(0,${searchedText.length}))`
             }).toArray();
         })
 }
-function getByMatchedCountries(trips) {
+
+function getByMatchedCountries(searchedText) {
     return mongoService.connectToMongo()
         .then(db => {
-            var matchedTripsPrms = [];
             const collection = db.collection('trips');
-            trips.forEach(trip => {
-                matchedTripsPrms.push(collection.find({ country: trip.country }).toArray());
-            });
-            return matchedTripsPrms;
+            return collection.find({ country: searchedText }).toArray();
+        })
+}
+
+function getByActiveTrips() {
+    return mongoService.connectToMongo()
+        .then(db => {
+            const collection = db.collection('trips');
+            return collection.find({ isComplete: true }).toArray();
         })
 }
 
@@ -46,7 +53,7 @@ function getTripsByUserId(userId) {
         .then(db => {
             const collection = db.collection('trips');
             return collection.find({ userId: userId }).toArray()
-    })
+        })
 }
 
 function remove(tripId) {
@@ -93,5 +100,6 @@ module.exports = {
     update,
     getByText,
     getTripsByUserId,
-    getByMatchedCountries
+    getByMatchedCountries,
+    getByActiveTrips
 }

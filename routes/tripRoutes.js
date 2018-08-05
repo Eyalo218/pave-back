@@ -4,25 +4,32 @@ const tripService = require('../services/tripService')
 
 
 function addTripRoutes(app) {
-
     app.get('/trips', (req, res) => {
         const userId = req.query.userId;
         const searchedText = req.query.searchedText;
-
-        if (searchedText === '' && userId === null) {
+        const isComplete = req.query.isComplete;
+        if (!searchedText && !userId) {
             tripService.query()
+                .then((trips) => {
+                    res.json(trips)
+                })
+                .then(trips => {
+                    res.send(trips)
+                })
+
+        } else if (!searchedText && userId) {
+            return tripService.getTripsByUserId(userId)
                 .then((trips) => res.json(trips))
                 .then(trips => res.send(trips))
 
-        } else if (searchedText === '' && userId) {
-            return tripService.getTripsByUserId(userId)
+        } else if (!searchedText && !userId && isComplete) {
+            return tripService.getByActiveTrips()
                 .then((trips) => res.json(trips))
-
-        } else {
+                .then(trips => res.send(trips))
+        }
+        else if (searchedText) {
             tripService.getByText(searchedText)
                 .then((trips) => {
-                    console.log(trips);
-                    
                     res.json(trips)
                 })
                 .then(trips => {
