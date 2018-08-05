@@ -21,7 +21,12 @@ function addTripRoutes(app) {
         } else if (searchedText === '' && !userId && isComplete) {
             return tripService.getByActiveTrips()
                 .then((trips) => res.json(trips));
+
+        } else if (searchedText === '' && !userId && isComplete) {
+            return tripService.getByActiveTrips()
+                .then((trips) => res.json(trips));
         }
+        
         else {
             tripService.getByText(searchedText)
                 .then((trips) => {

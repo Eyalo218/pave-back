@@ -32,11 +32,10 @@ function remove(userId) {
 function update(user) {
     user._id = new ObjectId(user._id)
     return mongoService.connectToMongo()
-
         .then(db => {
             const collection = db.collection('users');
             return collection.updateOne({ _id: user._id }, { $set: user })
-                .then(result => {
+                .then(() => {
                     return user;
                 })
         })
