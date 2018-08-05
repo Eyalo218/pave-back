@@ -11,7 +11,6 @@ app.use(cors({
     origin: ['http://localhost:8080'],
     credentials: true // enable set cookie
 }))
-app.use(express.static('dist'));
 app.use(session({
     secret: 'secret string',
     resave: false,
@@ -24,6 +23,7 @@ app.use(session({
 
 
 
+app.use(express.static('dist'));
 // app.send('hello')
 
 const addTripRoutes = require('./routes/tripRoutes')
