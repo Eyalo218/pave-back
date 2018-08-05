@@ -11,6 +11,7 @@ app.use(cors({
     origin: ['http://localhost:8080'],
     credentials: true // enable set cookie
 }))
+app.use(express.static('dist'));
 app.use(session({
     secret: 'secret string',
     resave: false,
@@ -34,6 +35,7 @@ addUserRoutes(app)
 const addReviewRoutes = require('./routes/reviewRoutes')
 addReviewRoutes(app)
 
+const port = process.env.PORT || 3000;
 
 app.listen(3000,()=>{
     console.log('listening to requests on port 3000!')
