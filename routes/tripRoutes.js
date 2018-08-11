@@ -7,23 +7,28 @@ function addTripRoutes(app) {
     app.get('/trips', (req, res) => {
         const userId = req.query.userId;
         const searchedText = req.query.searchedText;
-        const isComplete = req.query.isComplete;
-        if (!searchedText && !userId) {
-            tripService.query()
-                .then((trips) => {
-                    res.json(trips)
-                })
-                .then(trips => {
-                    res.send(trips)
-                })
+        var isActive = req.query.isActive;
+        isActive = isActive === 'true' ? true : false;
 
+        console.log('asdsadsdasd is active', isActive);
+
+        if (!searchedText && !userId) {
+            if (isActive) {
+                return tripService.getByActiveTrips()
+                    .then((trips) => res.json(trips))
+                    .then(trips => res.send(trips));
+            }
+            else {
+                return tripService.query()
+                    .then((trips) => {
+                        res.json(trips)
+                    })
+                    .then(trips => {
+                        res.send(trips)
+                    })
+            }
         } else if (!searchedText && userId) {
             return tripService.getTripsByUserId(userId)
-                .then((trips) => res.json(trips))
-                .then(trips => res.send(trips))
-
-        } else if (!searchedText && !userId && isComplete) {
-            return tripService.getByActiveTrips()
                 .then((trips) => res.json(trips))
                 .then(trips => res.send(trips))
         }
