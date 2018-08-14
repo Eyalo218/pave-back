@@ -8,26 +8,24 @@ function addTripRoutes(app) {
         const userId = req.query.userId;
         const searchedText = req.query.searchedText;
         const isComplete = req.query.isComplete;
-
-        if (searchedText === '' && userId === null) {
+        if (!searchedText && !userId) {
             tripService.query()
+                .then((trips) => {
+                    res.json(trips)
+                })
+                .then(trips => {
+                    res.send(trips)
+                })
+
+        } else if (!searchedText && userId) {
+            return tripService.getTripsByUserId(userId)
                 .then((trips) => res.json(trips))
                 .then(trips => res.send(trips))
 
-        } else if (searchedText === '' && userId) {
-            return tripService.getTripsByUserId(userId)
-                .then((trips) => res.json(trips))
-
-        } else if (searchedText === '' && !userId && isComplete) {
+        } else if (!searchedText && !userId && isComplete) {
             return tripService.getByActiveTrips()
                 .then((trips) => res.json(trips));
-
-        } else if (searchedText === '' && !userId && isComplete) {
-            return tripService.getByActiveTrips()
-                .then((trips) => res.json(trips));
-        }
-        
-        else {
+        } else if (searchedText) {
             tripService.getByText(searchedText)
                 .then((trips) => {
                     res.json(trips)

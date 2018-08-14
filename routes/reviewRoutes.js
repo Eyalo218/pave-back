@@ -9,7 +9,7 @@ function addReviewRoutes(app) {
 
     app.post('/reviews', (req, res) => {
         const review = req.body;
-        userService.add(review)
+        reviewService.add(review)
             .then(review => {
                 res.json(review)
             })
