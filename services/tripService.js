@@ -4,7 +4,6 @@ const mongoService = require('./mongoService');
 function query() {
     return mongoService.connectToMongo()
         .then(db => {
-
             const collection = db.collection('trips');
             return collection.find({}).toArray()
             // return Promise.resolve(currReviews)
@@ -40,11 +39,11 @@ function getByMatchedCountries(searchedText) {
         })
 }
 
-function getByActiveTrips() {
+function getByActiveTrips() {    
     return mongoService.connectToMongo()
         .then(db => {
             const collection = db.collection('trips');
-            return collection.find({ isComplete: true }).toArray();
+            return collection.find({ isActive: true }).toArray();
         })
 }
 

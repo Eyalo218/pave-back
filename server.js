@@ -23,6 +23,7 @@ app.use(session({
 
 
 
+app.use(express.static('dist'));
 // app.send('hello')
 
 const addTripRoutes = require('./routes/tripRoutes')
@@ -34,9 +35,10 @@ addUserRoutes(app)
 const addReviewRoutes = require('./routes/reviewRoutes')
 addReviewRoutes(app)
 
+const port = process.env.PORT || 3000;
 
-app.listen(3000,()=>{
-    console.log('listening to requests on port 3000!')
+app.listen(port,()=>{
+    console.log(`listening to requests on port  ${port}`)
 } )
 
 
