@@ -18,9 +18,13 @@ function addUserRoutes(app) {
     })
     
     app.delete('/users/:userId', (req, res) => {
-        const userId = req.params.userId;
-        userService.remove(userId)
-            .then(() => res.end(`user ${userId} Deleted `))
+        const userDetails = req.body;
+        console.log('Hi', userDetails)
+        // const userId = req.query.userId;
+        // const searchedText = req.query.searchedText;
+        // const isComplete = req.query.isComplete;
+        // userService.remove(userId)
+        //     .then(() => res.end(`user ${userId} Deleted `))
     })
 
     app.post(`${USER_URL}/signup`, (req, res) => {
@@ -49,7 +53,7 @@ function addUserRoutes(app) {
 
     app.put('/users/:userId', (req, res) => {
         const user = req.body;
-        userService.update(user)
+        return userService.update(user)
             .then(user => res.json(user))
     })
 }
