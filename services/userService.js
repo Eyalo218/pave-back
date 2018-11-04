@@ -8,7 +8,7 @@ function query() {
             return collection.find({}).toArray()
             return Promise.resolve(currReviews)
         })
-}   
+}
 
 function getById(userId) {
     userId = new ObjectId(userId)
@@ -35,8 +35,9 @@ function update(user) {
         .then(db => {
             const collection = db.collection('users');
             return collection.updateOne({ _id: user._id }, { $set: user })
-                .then(() => {
-                    return user;
+                .then(res => {
+                    console.log(res);
+                    return res;
                 })
         })
 }
@@ -56,31 +57,32 @@ function add(user) {
 function checkLogin(creds) {
     return mongoService.connectToMongo()
         .then(db => {
+            console.log(creds);
             const collection = db.collection('users');
-                return collection.find({"name": `${creds.name}`, "name": `${creds.password}`}).toArray()
-                    .then(user => {
-                        console.log('This IS Tha user', user)
-                        if (user) {
-                            var userToResolve = {...user}
-                            // delete userToResolve.password;
-                            return Promise.resolve(userToResolve)
-                        } else return Promise.reject()
-                    })
+            return collection.findOne({ "name": `${creds.name}`, "password": `${creds.password}` })
+                .then(user => {
+                    console.log('This IS Tha user', user);
+                    if (user) {
+                        console.log('userrrr',user);
+                        
+                        return user;
+                    } else return Promise.reject()
+                })
         })
 }
 
 
 
-    // console.log('checkLogin');
-    // console.log('checkLogin user service-SERVER, creds=', creds);
-    // var user = db.users.find(`{"name": "${creds.name}", "name": "${creds.password}"}`)
-    // // var user = db.users.find({ "name": creds.name, "password": creds.password })
-    // console.log('user, after filter: ', user);
-    // if (user) {
-    //     var userToResolve = {...user}
-    //     // delete userToResolve.password;
-    //     return Promise.resolve(userToResolve)
-    // } else return Promise.reject()
+// console.log('checkLogin');
+// console.log('checkLogin user service-SERVER, creds=', creds);
+// var user = db.users.find(`{"name": "${creds.name}", "name": "${creds.password}"}`)
+// // var user = db.users.find({ "name": creds.name, "password": creds.password })
+// console.log('user, after filter: ', user);
+// if (user) {
+//     var userToResolve = {...user}
+//     // delete userToResolve.password;
+//     return Promise.resolve(userToResolve)
+// } else return Promise.reject()
 
 
 

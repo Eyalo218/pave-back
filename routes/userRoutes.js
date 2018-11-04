@@ -7,8 +7,8 @@ function addUserRoutes(app) {
 
     app.get('/users', (req, res) => {
         userService.query()
-        .then((users) => res.json(users))
-        .then(users => res.send(users))
+            .then((users) => res.json(users))
+            .then(users => res.send(users))
     })
 
     app.get('/users/:userId', (req, res) => {
@@ -16,7 +16,7 @@ function addUserRoutes(app) {
         return userService.getById(userId)
             .then(user => res.json(user))
     })
-    
+
     app.delete('/users/:userId', (req, res) => {
         const userDetails = req.body;
         console.log('Hi', userDetails)
@@ -37,14 +37,15 @@ function addUserRoutes(app) {
                 res.json(user)
             })
     })
-
     app.post(`${USER_URL}/checkLogin`, (req, res) => {
         const credentials = req.body
-        return userService.checkLogin(credentials)
+        userService.checkLogin(credentials)
             .then(user => {
+                console.log(user);
+                console.log('the user:', user);
                 // TODO: entire user
                 req.session.loggedinUser = user.name;
-                return res.json(user[0])
+                res.json(user);
             })
             .catch(err => {
                 res.status(401).send('Wrong user/pass')
@@ -53,6 +54,7 @@ function addUserRoutes(app) {
 
     app.put('/users/:userId', (req, res) => {
         const user = req.body;
+        console.log(user);
         return userService.update(user)
             .then(user => res.json(user))
     })
