@@ -18,8 +18,7 @@ function addUserRoutes(app) {
     })
 
     app.delete('/users/:userId', (req, res) => {
-        const userDetails = req.body;
-        console.log('Hi', userDetails)
+        console.log(req.body);
         // const userId = req.query.userId;
         // const searchedText = req.query.searchedText;
         // const isComplete = req.query.isComplete;
@@ -54,7 +53,14 @@ function addUserRoutes(app) {
 
     app.put('/users/:userId', (req, res) => {
         const user = req.body;
-        console.log(user);
+        if (user.shouldDeleteTrip) {
+            return userService.deleteTrip(user)
+                .then(user => res.json(user))
+        }
+        if (user.shouldDeletePin) {
+            return userService.deletePin(user)
+                .then(user => res.json(user))
+        }
         return userService.update(user)
             .then(user => res.json(user))
     })

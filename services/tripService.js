@@ -1,5 +1,6 @@
 const ObjectId = require('mongodb').ObjectId;
 const mongoService = require('./mongoService');
+const noImgPaveUrl = 'https://res.cloudinary.com/pavelol5/image/upload/v1541341603/no-images-pave.png';
 
 function query() {
     return mongoService.connectToMongo()
@@ -39,7 +40,7 @@ function getByMatchedCountries(searchedText) {
         })
 }
 
-function getByActiveTrips() {    
+function getByActiveTrips() {
     return mongoService.connectToMongo()
         .then(db => {
             const collection = db.collection('trips');
@@ -77,6 +78,7 @@ function add(trip) {
 }
 
 function update(trip) {
+    if (trip.image === noImgPaveUrl) trip.image = trip.markers[0].photos[0];
     trip._id = new ObjectId(trip._id)
     return mongoService.connectToMongo()
         .then(db => {

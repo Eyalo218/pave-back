@@ -42,6 +42,48 @@ function update(user) {
         })
 }
 
+function deleteTrip(user) {
+    // user._id = new ObjectId(user._id);
+    user.tripId = new ObjectId(user.tripId);
+    return mongoService.connectToMongo()
+        .then(db => {
+            const collection = db.collection('trips');
+            return collection.deleteOne({ _id: user.tripId })
+                .then(() => {
+                    console.log('delted');
+                })
+            // return collection.updateOne({ _id: user._id }, { $set: user })
+            //     .then(res => {
+            //         console.log(res);
+            //         return res;
+            //     })
+        })
+}
+
+function deletePin(user) {
+    // user.userId = new ObjectId(user.userId);
+    let pintoDelete = user.tripId;
+    return mongoService.connectToMongo()
+        .then(db => {
+            const collection = db.collection('users');
+            return getById(user.userId).then(user => {
+                user.pins = user.pins.filter(pin => pin !== pintoDelete);
+                console.log(user.pins);
+                return update(user)
+                    .then(() => user.pins);
+            })
+            // return collection.deleteOne({ _id: user.tripId })
+            //     .then(() => {
+            //         console.log('delted');
+            //     })
+            // return collection.updateOne({ _id: user._id }, { $set: user })
+            //     .then(res => {
+            //         console.log(res);
+            //         return res;
+            //     })
+        })
+}
+
 function add(user) {
     return mongoService.connectToMongo()
         .then(db => {
@@ -63,8 +105,8 @@ function checkLogin(creds) {
                 .then(user => {
                     console.log('This IS Tha user', user);
                     if (user) {
-                        console.log('userrrr',user);
-                        
+                        console.log('userrrr', user);
+
                         return user;
                     } else return Promise.reject()
                 })
@@ -93,5 +135,7 @@ module.exports = {
     remove,
     add,
     checkLogin,
-    update
+    update,
+    deleteTrip,
+    deletePin
 }
